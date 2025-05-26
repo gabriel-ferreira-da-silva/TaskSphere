@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"  // mantém só um datasource, MySQL no seu caso
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  name      String
+  email     String     @unique
+  password  String
+  createdAt DateTime   @default(now())
+  projects  Project[]  @relation("ProjectCreator")
+  tasks     Task[]     @relation("TaskCreator")
+  collaborations Project[] @relation("Collaborators")
+}
+
+model Project {
+  id           String     @id @default(cuid())
+  name         String
+  description  String?    @db.VarChar(500)
+  startDate    DateTime
+  endDate      DateTime
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  creatorId    String
+  creator      User       @relation("ProjectCreator", fields: [creatorId], references: [id])
+
+  collaborators User[] @relation("Collaborators")
+
+  tasks        Task[]
+}
+
+model Task {
+  id         String    @id @default(cuid())
+  title      String
+  status     Status
+  dueDate    DateTime
+  imageUrl   String
+
+  projectId  String
+  project    Project   @relation(fields: [projectId], references: [id])
+
+  creatorId  String
+  creator    User      @relation("TaskCreator", fields: [creatorId], references: [id])
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum Status {
+  todo
+  in_progress
+  done
+}
