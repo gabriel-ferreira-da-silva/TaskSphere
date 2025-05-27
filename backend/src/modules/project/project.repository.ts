@@ -15,7 +15,13 @@ export class ProjectRepository {
   }
 
   create(data: CreateProjectDto): Promise<Project> {
-    return this.prisma.project.create({ data })
+    return this.prisma.project.create({
+      data: {
+        ...data,
+        startDate: new Date(data.startDate),
+        endDate: new Date(data.endDate),
+      }
+    });
   }
 
   update(
