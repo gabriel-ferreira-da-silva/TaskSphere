@@ -17,7 +17,7 @@ export class CreateTaskDto {
   @IsDate()
   @Type(() => Date)
   dueDate: Date
-
+  
   @IsUrl()
   imageUrl: string
 

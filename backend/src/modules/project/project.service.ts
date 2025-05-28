@@ -18,6 +18,11 @@ export class ProjectService {
     return project
   }
 
+  async findByUserId(id: string) {
+    const project = await this.projectRepository.findByUserId(id)
+    return project
+  }
+
   async create(data: CreateProjectDto) {
     return this.projectRepository.create(data)
   }
