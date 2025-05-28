@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { User } from '../interfaces/user.interface';
 
 export interface CreateProjectDto {
   name: string;
@@ -24,6 +25,13 @@ export class ProjectService {
     const res = await axios.get(`${this.API_URL}/projects/${id}`);
     return res.data;
   }
+
+  async getCollaborators(projectId: string): Promise<User[]> {
+    const res = await fetch(`${this.API_URL}/projects/${projectId}/collaborators`);
+    if (!res.ok) throw new Error('Erro ao buscar colaboradores');
+    return res.json();
+  }
+
 
   async getByUserId(id: string) {
     const res = await axios.get(`${this.API_URL}/projects/byUserId/${id}`);

@@ -18,6 +18,10 @@ export class ProjectService {
     return project
   }
 
+  async getCollaborators(projectId: string) {
+    return this.projectRepository.getCollaborators(projectId);
+  }
+
   async findByUserId(id: string) {
     const project = await this.projectRepository.findByUserId(id)
     return project

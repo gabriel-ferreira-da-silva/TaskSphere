@@ -2,21 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { TaskService } from '../../services/Task.service';
 import { ProjectService } from '../../services/Project.service';
+import { Task } from '../../interfaces/task.interface';
+import { Project } from '../../interfaces/project.interface';
+import { User } from '../../interfaces/user.interface';
+import { CollaboratorsPanel } from './collaboratorsPanel.tsx/CollaboratorsPanel';
 import styles from './ProjectPage.module.css';
 
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: 'pendente' | 'em andamento' | 'concluída';
-  projectId: string;
-}
-
-interface Project {
-  id: string;
-  name: string;
-  description: string;
-}
 
 const taskService = new TaskService();
 const projectService = new ProjectService();
@@ -25,6 +16,7 @@ export default function ProjectPage() {
   const { projectId } = useParams();
   const [project, setProject] = useState<Project | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [collaborators, setCollaborators] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -37,13 +29,16 @@ export default function ProjectPage() {
           return;
         }
 
-        const [projectData, taskData] = await Promise.all([
+        const [projectData, taskData, userData] = await Promise.all([
           projectService.getOne(projectId),
           taskService.getByProjectId(projectId),
+          projectService.getCollaborators(projectId)
         ]);
 
         setProject(projectData);
         setTasks(taskData);
+        setCollaborators(userData);
+
       } catch (err) {
         setError('Erro ao carregar dados do projeto.');
       } finally {
@@ -59,43 +54,47 @@ export default function ProjectPage() {
   };
 
   return (
-    <div className={styles.projectContainer}>
-      {loading ? (
-        <p>Carregando...</p>
-      ) : error ? (
-        <p className={styles.error}>{error}</p>
-      ) : project ? (
-        <>
-          <h1 className={styles.title}>{project.name}</h1>
-          <p className={styles.description}>{project.description}</p>
+  <div className={styles.projectContainer}>
+    {loading ? (
+      <p>Carregando...</p>
+    ) : error ? (
+      <p className={styles.error}>{error}</p>
+    ) : project ? (
+      <>
+        <h1 className={styles.title}>{project.name}</h1>
+        <p className={styles.description}>{project.description}</p>
 
-          <button className={styles.createButton} onClick={handleAddTask}>
-            Adicionar Nova Tarefa
-          </button>
+        
+        <CollaboratorsPanel collaborators={collaborators} />
 
-          {tasks.length === 0 ? (
-            <p className={styles.empty}>Nenhuma tarefa cadastrada.</p>
-          ) : (
-            <div className={styles.cardGrid}>
-              {tasks.map((task) => (
-                <div
-                    key={task.id}
-                    className={styles.card}
-                    onClick={() => navigate(`/tasks/${task.id}`)}
-                    style={{ cursor: 'pointer' }}
-                >
-                    <h2>{task.title}</h2>
-                    <p>{task.description}</p>
-                    <p>Status: <strong>{task.status}</strong></p>
-                </div>
-                ))}
+        <button className={styles.createButton} onClick={handleAddTask}>
+          Adicionar Nova Tarefa
+        </button>
 
-            </div>
-          )}
-        </>
-      ) : (
-        <p className={styles.error}>Projeto não encontrado.</p>
-      )}
-    </div>
-  );
+        {tasks.length === 0 ? (
+          <p className={styles.empty}>Nenhuma tarefa cadastrada.</p>
+        ) : (
+          <div className={styles.cardGrid}>
+            {tasks.map((task) => (
+              <div
+                key={task.id}
+                className={styles.card}
+                onClick={() => navigate(`/tasks/${task.id}`)}
+                style={{ cursor: 'pointer' }}
+              >
+                <h2>{task.title}</h2>
+                <p>Status: <strong>{task.status}</strong></p>
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    ) : (
+      <p className={styles.error}>Projeto não encontrado.</p>
+    )}
+  </div>
+);
+
+
+
 }

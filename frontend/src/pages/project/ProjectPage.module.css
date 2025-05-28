@@ -61,3 +61,14 @@
   font-style: italic;
   margin-top: 1rem;
 }
+
+.collaboratorsList {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.collaboratorsList li {
+  margin-bottom: 4px;
+}
+
