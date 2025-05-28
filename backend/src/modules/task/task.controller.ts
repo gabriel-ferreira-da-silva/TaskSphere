@@ -16,6 +16,11 @@ export class TaskController {
     return this.taskService.findOne(id)
   }
 
+  @Get('/byProjectId/:id')
+  findByProjectId(@Param('id') id: string) {
+    return this.taskService.findByProjectId(id)
+  }
+
   @Post()
   create(@Body() data: CreateTaskDto) {
     return this.taskService.create(data)

@@ -14,6 +14,10 @@ export class TaskRepository {
     return this.prisma.task.findUnique({ where: { id } })
   }
 
+  findByProjectId(id: string): Promise<Task[] | null> {
+    return this.prisma.task.findMany({ where: { projectId: id } })
+  }
+
   create(data: CreateTaskDto): Promise<Task> {
     return this.prisma.task.create({ data })
   }
