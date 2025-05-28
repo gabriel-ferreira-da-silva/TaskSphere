@@ -78,12 +78,18 @@ export default function ProjectPage() {
           ) : (
             <div className={styles.cardGrid}>
               {tasks.map((task) => (
-                <div key={task.id} className={styles.card}>
-                  <h2>{task.title}</h2>
-                  <p>{task.description}</p>
-                  <p>Status: <strong>{task.status}</strong></p>
+                <div
+                    key={task.id}
+                    className={styles.card}
+                    onClick={() => navigate(`/tasks/${task.id}`)}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <h2>{task.title}</h2>
+                    <p>{task.description}</p>
+                    <p>Status: <strong>{task.status}</strong></p>
                 </div>
-              ))}
+                ))}
+
             </div>
           )}
         </>

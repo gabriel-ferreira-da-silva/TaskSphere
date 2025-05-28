@@ -5,7 +5,8 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import CreateProjectPage from './pages/dashboard/createProject/createProjectPage';
 import EditProjectPage from './pages/dashboard/editProject/editProject';
 import ProjectPage from './pages/project/ProjectPage';
-import CreateTaskPage from './pages/dashboard/task/createTaskPage';
+import CreateTaskPage from './pages/task/createTaskPage';
+import ViewTaskPage from './pages/task/viewTask/ViewTaskPage';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/projects/:projectId" element={<ProjectPage />} />
        
         <Route path="/project/:projectId/tasks/create" element={<CreateTaskPage />} />
+        <Route path="/tasks/:taskId" element={<ViewTaskPage />} />
 
         
       </Routes>
