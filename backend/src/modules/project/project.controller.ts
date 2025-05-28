@@ -16,6 +16,11 @@ export class ProjectController {
     return this.projectService.findOne(id)
   }
 
+  @Get('/byUserId/:userId')
+  findByUserId(@Param('userId') id: string) {
+    return this.projectService.findByUserId(id)
+  }
+
   @Post()
   create(@Body() createProjectDto: CreateProjectDto) {
     return this.projectService.create(createProjectDto)

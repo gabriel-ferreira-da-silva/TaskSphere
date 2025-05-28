@@ -3,6 +3,7 @@ import LoginPage from './pages/login/LoginPage';
 import RegisterPage from './pages/register/RegisterPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import CreateProjectPage from './pages/dashboard/createProject/createProjectPage';
+import EditProjectPage from './pages/dashboard/editProject/editProject';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/dashboard" element={<DashboardPage/>}/>
         <Route path="/dashboard/create" element={<CreateProjectPage/>}/>
+        <Route path="/dashboard/edit/:id" element={<EditProjectPage/>}/>
         
       </Routes>
     </Router>

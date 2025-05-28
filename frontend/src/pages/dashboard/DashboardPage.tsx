@@ -23,7 +23,14 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const data = await projectService.getAll();
+        const storedUser = localStorage.getItem('user');
+        if (!storedUser) {
+          setError('Usuário não encontrado.');
+          return;
+        }
+
+        const user = JSON.parse(storedUser);
+        const data = await projectService.getByUserId(user.id);
         setProjects(data);
       } catch (err) {
         setError('Erro ao carregar projetos.');
@@ -34,6 +41,7 @@ export default function DashboardPage() {
 
     fetchProjects();
   }, []);
+
 
   const handleCreateProject = () => {
     navigate('/dashboard/create');

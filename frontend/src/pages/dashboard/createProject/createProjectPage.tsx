@@ -41,6 +41,23 @@ export default function CreateProjectPage() {
     setLoading(true);
 
     try {
+      const storedUser = localStorage.getItem('user');
+      if (!storedUser) {
+        setError('Usuário não está logado.');
+        setLoading(false);
+        return;
+      }
+
+      console.log("storedUser")
+      console.log(storedUser)
+
+      const user = JSON.parse(storedUser);
+      project.creatorId = user.id;
+
+      console.log("user")
+      console.log(user)
+
+
       await projectService.create(project);
       alert('Projeto criado com sucesso!');
       navigate('/dashboard');
@@ -50,6 +67,7 @@ export default function CreateProjectPage() {
       setLoading(false);
     }
   };
+
 
   return (
     <form className={styles.container} onSubmit={handleSubmit}>
@@ -91,16 +109,6 @@ export default function CreateProjectPage() {
         name="endDate"
         value={project.endDate}
         onChange={e => setProject({ ...project, endDate: e.target.value })}
-        required
-      />
-
-      <label className={styles.label}>ID do Criador</label>
-      <input
-        className={styles.input}
-        name="creatorId"
-        placeholder="ID do Criador"
-        value={project.creatorId}
-        onChange={handleChange}
         required
       />
 

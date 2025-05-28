@@ -25,6 +25,11 @@ export class ProjectService {
     return res.data;
   }
 
+  async getByUserId(id: string) {
+    const res = await axios.get(`${this.API_URL}/projects/byUserId/${id}`);
+    return res.data;
+  }
+
   async create(project: CreateProjectDto) {
     const res = await axios.post(`${this.API_URL}/projects`, project);
     return res.data;

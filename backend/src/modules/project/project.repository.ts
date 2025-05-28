@@ -14,6 +14,10 @@ export class ProjectRepository {
     return this.prisma.project.findUnique({ where: { id } })
   }
 
+  findByUserId(id: string): Promise<Project[] | null> {
+    return this.prisma.project.findMany({ where: { creatorId: id } })
+  }
+
   create(data: CreateProjectDto): Promise<Project> {
     return this.prisma.project.create({
       data: {

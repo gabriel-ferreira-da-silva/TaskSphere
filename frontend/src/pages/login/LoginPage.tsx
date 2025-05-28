@@ -20,6 +20,8 @@ export default function LoginPage() {
     try {
       const data = await authService.login(email, password);
       localStorage.setItem('token', data.access_token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      console.log(data)
       navigate('/dashboard');
     } catch (err) {
       setError('Email ou senha inválidos.');
