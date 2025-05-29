@@ -32,6 +32,12 @@ export class ProjectService {
     return res.json();
   }
 
+  async addCollaborator(projectId: string, data: { userId: string }) {
+    const res = await axios.post(`${this.API_URL}/projects/${projectId}/collaborators`, data);
+    return res.data;
+  }
+
+
 
   async getByUserId(id: string) {
     const res = await axios.get(`${this.API_URL}/projects/byUserId/${id}`);

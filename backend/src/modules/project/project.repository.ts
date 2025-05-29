@@ -14,6 +14,29 @@ export class ProjectRepository {
     });
   }
 
+  async isUserCollaborator(projectId: string, userId: string) {
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      include: { collaborators: true },
+    });
+
+    return project?.collaborators.some(user => user.id === userId);
+  }
+
+  async addCollaborator(projectId: string, userId: string) {
+  return this.prisma.project.update({
+    where: { id: projectId },
+    data: {
+      collaborators: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+}
+
+
   findOne(id: string): Promise<Project | null> {
     return this.prisma.project.findUnique({
       where: { id },
