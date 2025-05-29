@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { AuthService } from '../../services/Auth.service';
 import styles from './LoginPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo.svg';
+
 
 const authService = new AuthService();
 
@@ -32,6 +34,8 @@ export default function LoginPage() {
 
   return (
     <form className={styles.container} onSubmit={handleLogin}>
+      <img src={logo} className={styles.logo} alt="Logo" />
+      
       <h2 className={styles.title}>Login</h2>
 
       <input

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AuthService } from '../../services/Auth.service';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './RegisterPage.module.css';
+import logo from '../../assets/logo.svg';
 
 const authService = new AuthService();
 
@@ -31,6 +32,7 @@ export default function RegisterPage() {
 
   return (
     <form className={styles.container} onSubmit={handleRegister}>
+      <img src={logo} className={styles.logo} alt="Logo" />
       <h2 className={styles.title}>Cadastro</h2>
 
       <input
