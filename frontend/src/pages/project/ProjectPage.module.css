@@ -10,6 +10,20 @@
   color: #333;
 }
 
+.titleHolder{
+  display: flex;
+  flex: row;
+  justify-content: space-between;
+}
+.buttonsHolder{
+  padding: 10px;
+}
+
+.excludeButton{
+  background-color: red;
+  margin:10px
+}
+
 .description {
   font-size: 1.1rem;
   color: #666;

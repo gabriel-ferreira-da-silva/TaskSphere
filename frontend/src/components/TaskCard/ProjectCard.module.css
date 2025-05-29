@@ -1,0 +1,46 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 2px dashed #0400ff;
+  border-radius: 16px;
+  padding: 2rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #2b87dd;
+  width: 350px;
+  min-height: 350px; 
+  margin: 10px;
+  box-sizing: border-box;
+  overflow: hidden; 
+  word-wrap: break-word; 
+  color: white;
+
+}
+
+.card:hover {
+  background-color: #0040b8;
+  border-color: #999;
+  transform: scale(1.02);
+}
+
+.cardTitle {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  overflow-wrap: break-word; 
+}
+
+.cardDescription {
+  font-size: 1.5rem;
+  color: white;
+  overflow-wrap: break-word; 
+  flex-grow: 1; 
+  margin-top: auto; 
+}
+
+.cardDate{
+  font-size: 1.5rem;
+    font-weight: 600;
+}
