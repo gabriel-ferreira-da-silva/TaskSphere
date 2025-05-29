@@ -37,6 +37,12 @@ export class ProjectService {
     return res.data;
   }
 
+  async removeCollaborator(projectId: string, data: { userId: string }) {
+    const res = await axios.delete(`${this.API_URL}/projects/${projectId}/collaborators`, {
+      data: data, 
+    });
+    return res.data;
+  }
 
 
   async getByUserId(id: string) {

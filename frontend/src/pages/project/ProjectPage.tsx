@@ -8,7 +8,6 @@ import { User } from '../../interfaces/user.interface';
 import { CollaboratorsPanel } from './collaboratorsPanel.tsx/CollaboratorsPanel';
 import styles from './ProjectPage.module.css';
 
-
 const taskService = new TaskService();
 const projectService = new ProjectService();
 
@@ -52,49 +51,55 @@ export default function ProjectPage() {
   const handleAddTask = () => {
     navigate(`/project/${projectId}/tasks/create`);
   };
+  async function onRemove(userId: string) {
+    if (!projectId) return;
+
+    try {
+      await projectService.removeCollaborator(projectId, {userId: userId});
+      setCollaborators(prev => prev.filter(user => user.id !== userId));
+    } catch (err) {
+      setError('Erro ao remover colaborador.');
+    }
+  }
 
   return (
-  <div className={styles.projectContainer}>
-    {loading ? (
-      <p>Carregando...</p>
-    ) : error ? (
-      <p className={styles.error}>{error}</p>
-    ) : project ? (
-      <>
-        <h1 className={styles.title}>{project.name}</h1>
-        <p className={styles.description}>{project.description}</p>
+    <div className={styles.projectContainer}>
+      {loading ? (
+        <p>Carregando...</p>
+      ) : error ? (
+        <p className={styles.error}>{error}</p>
+      ) : project ? (
+        <>
+          <h1 className={styles.title}>{project.name}</h1>
+          <p className={styles.description}>{project.description}</p>
 
-        
-        <CollaboratorsPanel collaborators={collaborators} />
+          <CollaboratorsPanel collaborators={collaborators} onRemove={onRemove} />
 
-        <button className={styles.createButton} onClick={handleAddTask}>
-          Adicionar Nova Tarefa
-        </button>
+          <button className={styles.createButton} onClick={handleAddTask}>
+            Adicionar Nova Tarefa
+          </button>
 
-        {tasks.length === 0 ? (
-          <p className={styles.empty}>Nenhuma tarefa cadastrada.</p>
-        ) : (
-          <div className={styles.cardGrid}>
-            {tasks.map((task) => (
-              <div
-                key={task.id}
-                className={styles.card}
-                onClick={() => navigate(`/tasks/${task.id}`)}
-                style={{ cursor: 'pointer' }}
-              >
-                <h2>{task.title}</h2>
-                <p>Status: <strong>{task.status}</strong></p>
-              </div>
-            ))}
-          </div>
-        )}
-      </>
-    ) : (
-      <p className={styles.error}>Projeto não encontrado.</p>
-    )}
-  </div>
-);
-
-
-
+          {tasks.length === 0 ? (
+            <p className={styles.empty}>Nenhuma tarefa cadastrada.</p>
+          ) : (
+            <div className={styles.cardGrid}>
+              {tasks.map((task) => (
+                <div
+                  key={task.id}
+                  className={styles.card}
+                  onClick={() => navigate(`/tasks/${task.id}`)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <h2>{task.title}</h2>
+                  <p>Status: <strong>{task.status}</strong></p>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <p className={styles.error}>Projeto não encontrado.</p>
+      )}
+    </div>
+  );
 }

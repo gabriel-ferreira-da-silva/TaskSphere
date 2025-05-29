@@ -34,6 +34,15 @@ export class ProjectController {
     return this.projectService.addCollaborator(projectId, userId);
   }
 
+  @Delete(':id/collaborators')
+  async removeCollaborator(
+    @Param('id') projectId: string,
+    @Body('userId') userId: string
+  ) {
+    console.log("meaasssss")
+    return this.projectService.removeCollaborator(projectId, userId);
+  }
+
 
   @Post()
   create(@Body() createProjectDto: CreateProjectDto) {

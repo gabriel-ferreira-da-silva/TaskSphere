@@ -18,7 +18,7 @@ export class ProjectService {
     return project
   }
 
-   async addCollaborator(projectId: string, id: string) {
+  async addCollaborator(projectId: string, id: string) {
     
     const alreadyAdded = await this.projectRepository.isUserCollaborator(projectId, id);
     
@@ -28,6 +28,20 @@ export class ProjectService {
 
     return this.projectRepository.addCollaborator(projectId, id);
   }
+
+
+  async removeCollaborator(projectId: string, id: string) {
+
+    const alreadyAdded = await this.projectRepository.isUserCollaborator(projectId, id);
+    console.log("tttttmeaaasadasfdasdfasd  ")
+    /*
+    if (!alreadyAdded) {
+      throw new ConflictException('Usuário já é colaborador');
+    }*/
+    console.log("meaaasadasfdasdfasd  ")
+    return this.projectRepository.removeCollaborator(projectId, id);
+  }
+
 
   async getCollaborators(projectId: string) {
     return this.projectRepository.getCollaborators(projectId);
