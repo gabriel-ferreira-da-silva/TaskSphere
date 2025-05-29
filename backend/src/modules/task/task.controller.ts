@@ -16,6 +16,11 @@ export class TaskController {
     return this.taskService.findOne(id)
   }
 
+  @Get('/byProjectId/:id')
+  findByProjectId(@Param('id') id: string) {
+    return this.taskService.findByProjectId(id)
+  }
+
   @Post()
   create(@Body() data: CreateTaskDto) {
     return this.taskService.create(data)
@@ -23,6 +28,7 @@ export class TaskController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() data: UpdateTaskDto) {
+    console.log("soem")
     return this.taskService.update(id, data)
   }
 

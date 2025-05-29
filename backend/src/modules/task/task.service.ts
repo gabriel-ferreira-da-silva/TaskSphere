@@ -13,6 +13,10 @@ export class TaskService {
   findOne(id: string) {
     return this.taskRepository.findOne(id)
   }
+  
+  findByProjectId(id: string) {
+    return this.taskRepository.findByProjectId(id)
+  }
 
   create(data: CreateTaskDto) {
     return this.taskRepository.create(data)

@@ -1,15 +1,8 @@
 import axios from 'axios';
 import { User } from '../interfaces/user.interface';
 
-export interface CreateProjectDto {
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-  creatorId: string;
-}
 
-export class ProjectService {
+export class UserService {
   private API_URL: string;
 
   constructor() {
@@ -17,12 +10,12 @@ export class ProjectService {
   }
 
   async getAll() {
-    const res = await axios.get(`${this.API_URL}/projects`);
+    const res = await axios.get(`${this.API_URL}/users`);
     return res.data;
   }
 
   async getOne(id: string) {
-    const res = await axios.get(`${this.API_URL}/projects/${id}`);
+    const res = await axios.get(`${this.API_URL}/users/${id}`);
     return res.data;
   }
 
@@ -39,23 +32,18 @@ export class ProjectService {
 
 
 
-  async getByUserId(id: string) {
-    const res = await axios.get(`${this.API_URL}/projects/byUserId/${id}`);
+  async create(user: User) {
+    const res = await axios.post(`${this.API_URL}/users`, user);
     return res.data;
   }
 
-  async create(project: CreateProjectDto) {
-    const res = await axios.post(`${this.API_URL}/projects`, project);
-    return res.data;
-  }
-
-  async update(id: string, project: Partial<CreateProjectDto>) {
-    const res = await axios.patch(`${this.API_URL}/projects/${id}`, project);
+  async update(id: string, project: Partial<User>) {
+    const res = await axios.patch(`${this.API_URL}/users/${id}`, project);
     return res.data;
   }
 
   async remove(id: string) {
-    const res = await axios.delete(`${this.API_URL}/projects/${id}`);
+    const res = await axios.delete(`${this.API_URL}/users/${id}`);
     return res.data;
   }
 }

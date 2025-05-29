@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common'
 import { ProjectRepository } from './project.repository'
 import { CreateProjectDto } from './dto/createProject.dto'
 
@@ -16,6 +16,21 @@ export class ProjectService {
       throw new NotFoundException(`Project with ID ${id} not found`)
     }
     return project
+  }
+
+   async addCollaborator(projectId: string, id: string) {
+    
+    const alreadyAdded = await this.projectRepository.isUserCollaborator(projectId, id);
+    
+    if (alreadyAdded) {
+      throw new ConflictException('Usuário já é colaborador');
+    }
+
+    return this.projectRepository.addCollaborator(projectId, id);
+  }
+
+  async getCollaborators(projectId: string) {
+    return this.projectRepository.getCollaborators(projectId);
   }
 
   async findByUserId(id: string) {

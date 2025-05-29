@@ -5,17 +5,71 @@ import { CreateProjectDto } from './dto/createProject.dto'
 @Injectable()
 export class ProjectRepository {
   private prisma = new PrismaClient()
-
+  
   findAll(): Promise<Project[]> {
-    return this.prisma.project.findMany()
+    return this.prisma.project.findMany({
+      include: {
+        collaborators: true,
+      },
+    });
   }
+
+  async isUserCollaborator(projectId: string, userId: string) {
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      include: { collaborators: true },
+    });
+
+    return project?.collaborators.some(user => user.id === userId);
+  }
+
+  async addCollaborator(projectId: string, userId: string) {
+  return this.prisma.project.update({
+    where: { id: projectId },
+    data: {
+      collaborators: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+}
+
 
   findOne(id: string): Promise<Project | null> {
-    return this.prisma.project.findUnique({ where: { id } })
+    return this.prisma.project.findUnique({
+      where: { id },
+      include: {
+        collaborators: true,
+      },
+    });
   }
+
 
   findByUserId(id: string): Promise<Project[] | null> {
     return this.prisma.project.findMany({ where: { creatorId: id } })
+  }
+
+  async getCollaborators(projectId: string) {
+    const project = await this.prisma.project.findUnique({
+      where: { id: projectId },
+      include: {
+        collaborators: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!project) {
+      throw new Error('Projeto não encontrado');
+    }
+
+    return project.collaborators;
   }
 
   create(data: CreateProjectDto): Promise<Project> {

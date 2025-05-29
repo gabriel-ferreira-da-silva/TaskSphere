@@ -21,6 +21,20 @@ export class ProjectController {
     return this.projectService.findByUserId(id)
   }
 
+  @Get(':id/collaborators')
+  async getCollaborators(@Param('id') projectId: string) {
+    return this.projectService.getCollaborators(projectId);
+  }
+
+  @Post(':id/collaborators')
+  async addCollaborator(
+    @Param('id') projectId: string,
+    @Body('userId') userId: string
+  ) {
+    return this.projectService.addCollaborator(projectId, userId);
+  }
+
+
   @Post()
   create(@Body() createProjectDto: CreateProjectDto) {
     return this.projectService.create(createProjectDto)

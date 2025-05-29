@@ -63,13 +63,19 @@ export default function DashboardPage() {
         <p className={styles.empty}>Nenhum projeto encontrado.</p>
       ) : (
         <div className={styles.cardGrid}>
-          {projects.map((project) => (
-            <div key={project.id} className={styles.card}>
-              <h2 className={styles.cardTitle}>{project.name}</h2>
-              <p className={styles.cardDescription}>{project.description}</p>
-            </div>
-          ))}
-        </div>
+            {projects.map((project) => (
+              <div
+                key={project.id}
+                className={styles.card}
+                onClick={() => navigate(`/projects/${project.id}`)}
+                style={{ cursor: 'pointer' }}
+              >
+                <h2 className={styles.cardTitle}>{project.name}</h2>
+                <p className={styles.cardDescription}>{project.description}</p>
+              </div>
+            ))}
+          </div>
+
       )}
     </div>
   );
