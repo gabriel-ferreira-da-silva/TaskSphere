@@ -28,6 +28,7 @@ export class TaskController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() data: UpdateTaskDto) {
+    console.log("soem")
     return this.taskService.update(id, data)
   }
 

@@ -23,8 +23,17 @@ export class TaskRepository {
   }
 
   update(id: string, data: UpdateTaskDto): Promise<Task> {
-    return this.prisma.task.update({ where: { id }, data })
+    const formattedData = {
+      ...data,
+      dueDate: data.dueDate ? new Date(data.dueDate).toISOString() : undefined,
+    };
+
+    return this.prisma.task.update({
+      where: { id },
+      data: formattedData,
+    });
   }
+
 
   remove(id: string): Promise<Task> {
     return this.prisma.task.delete({ where: { id } })

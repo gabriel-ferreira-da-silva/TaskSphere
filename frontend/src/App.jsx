@@ -8,6 +8,7 @@ import ProjectPage from './pages/project/ProjectPage';
 import CreateTaskPage from './pages/task/createTaskPage';
 import ViewTaskPage from './pages/task/viewTask/ViewTaskPage';
 import AddCollaboratorPage from './pages/project/addCollaboratorPage/AddCollaboratorPage';
+import EditTaskPage from './pages/task/editTask/editTaskPage';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/project/:projectId/tasks/create" element={<CreateTaskPage />} />
 
         <Route path="/tasks/:taskId" element={<ViewTaskPage />} />
+        <Route path="/tasks/:taskId/edit" element={<EditTaskPage />} />
 
         
       </Routes>

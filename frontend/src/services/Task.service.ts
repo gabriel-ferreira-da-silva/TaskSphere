@@ -51,7 +51,7 @@ export class TaskService {
   }
 
   async update(id: string, task: UpdateTaskDto) {
-    const res = await axios.patch(`${this.API_URL}/tasks/${id}`, task);
+    const res = await axios.put(`${this.API_URL}/tasks/${id}`, task);
     return res.data;
   }
 

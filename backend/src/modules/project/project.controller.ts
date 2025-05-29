@@ -23,7 +23,6 @@ export class ProjectController {
 
   @Get(':id/collaborators')
   async getCollaborators(@Param('id') projectId: string) {
-    console.log("não fode")
     return this.projectService.getCollaborators(projectId);
   }
 

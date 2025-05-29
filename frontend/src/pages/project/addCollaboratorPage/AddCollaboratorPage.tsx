@@ -73,7 +73,7 @@ export default function AddCollaboratorPage() {
       {success && <p className={styles.success}>{success}</p>}
       {error && <p className={styles.error}>{error}</p>}
 
-      <button onClick={() => navigate(`/project/${projectId}`)}>Voltar</button>
+      <button onClick={() => navigate(`/projects/${projectId}`)}>Voltar</button>
     </div>
   );
 }

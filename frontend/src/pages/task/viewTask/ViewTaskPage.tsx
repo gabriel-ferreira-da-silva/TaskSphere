@@ -15,7 +15,7 @@ interface Task {
   id: string;
   title: string;
   status: Status;
-  dueDate: string; // assume que vem como ISO string
+  dueDate: string;
   imageUrl: string;
   projectId: string;
   creatorId: string;
@@ -46,6 +46,26 @@ export default function ViewTaskPage() {
     fetchTask();
   }, [taskId]);
 
+  const handleDelete = async () => {
+    if (!taskId || !task) return;
+    const confirmDelete = window.confirm('Tem certeza que deseja excluir esta tarefa?');
+
+    if (!confirmDelete) return;
+
+    try {
+      await taskService.remove(taskId);
+      navigate(`/projects/${task.projectId}`);
+    } catch (err) {
+      setError('Erro ao excluir tarefa.');
+    }
+  };
+
+  const handleEdit = () => {
+    if (task) {
+      navigate(`/tasks/${task.id}/edit`);
+    }
+  };
+
   if (loading) return <p className={styles.loading}>Carregando tarefa...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
   if (!task) return <p className={styles.error}>Tarefa não encontrada.</p>;
@@ -66,9 +86,17 @@ export default function ViewTaskPage() {
       <p><strong>ID do Projeto:</strong> {task.projectId}</p>
       <p><strong>Criador:</strong> {task.creatorId}</p>
 
-      <button className={styles.button} onClick={() => navigate(`/projects/${task.projectId}`)}>
-        Voltar para Projeto
-      </button>
+      <div className={styles.buttonGroup}>
+        <button className={styles.button} onClick={() => navigate(`/projects/${task.projectId}`)}>
+          Voltar para Projeto
+        </button>
+        <button className={styles.editButton} onClick={handleEdit}>
+          Editar Tarefa
+        </button>
+        <button className={styles.deleteButton} onClick={handleDelete}>
+          Excluir Tarefa
+        </button>
+      </div>
     </div>
   );
 }
