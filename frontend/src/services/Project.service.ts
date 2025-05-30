@@ -13,7 +13,7 @@ export class ProjectService {
   private API_URL: string;
 
   constructor() {
-    this.API_URL = 'http://localhost:3000';
+    this.API_URL = 'https://tasksphere-deploy.onrender.com/';
   }
 
   async getAll() {
