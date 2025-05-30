@@ -21,6 +21,11 @@ export default function ProjectPage() {
   const [collaborators, setCollaborators] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const [nameFilter, setNameFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,13 +39,13 @@ export default function ProjectPage() {
         const [projectData, taskData, userData] = await Promise.all([
           projectService.getOne(projectId),
           taskService.getByProjectId(projectId),
-          projectService.getCollaborators(projectId)
+          projectService.getCollaborators(projectId),
         ]);
 
         setProject(projectData);
         setTasks(taskData);
         setCollaborators(userData);
-        setLoggedUser(JSON.parse(localStorage.getItem("user")))
+        setLoggedUser(JSON.parse(localStorage.getItem("user")));
       } catch (err) {
         setError('Erro ao carregar dados do projeto.');
       } finally {
@@ -77,55 +82,80 @@ export default function ProjectPage() {
     }
   };
 
+  const filteredTasks = tasks.filter((task) => {
+    const matchesName = task.title.toLowerCase().includes(nameFilter.toLowerCase());
+    const matchesStatus = statusFilter ? task.status === statusFilter : true;
+    const matchesDate = dateFilter ? task.endDate?.startsWith(dateFilter) : true;
+    return matchesName && matchesStatus && matchesDate;
+  });
 
   return (
-  <div className={styles.projectContainer}>
-    {loading ? (
-      <p>Carregando...</p>
-    ) : error ? (
-      <p className={styles.error}>{error}</p>
-    ) : project ? (
-      <>
-        <div className={styles.titleHolder}>
-          <h1 className={styles.title}>{project.name}</h1>
-          <div className={styles.buttonsHolder}>
-            {
-              project.creatorId == loggedUser?.id ?
-              <div>
-                <button onClick={handleEditProject}>Editar Projeto</button>
-                <button className={styles.excludeButton} onClick={handleDeleteProject}>Excluir Projeto</button>
-              </div> :
-              <div></div>
-            }
+    <div className={styles.projectContainer}>
+      {loading ? (
+        <p>Carregando...</p>
+      ) : error ? (
+        <p className={styles.error}>{error}</p>
+      ) : project ? (
+        <>
+          <div className={styles.titleHolder}>
+            <h1 className={styles.title}>{project.name}</h1>
+            <div className={styles.buttonsHolder}>
+              {project.creatorId === loggedUser?.id ? (
+                <div>
+                  <button onClick={handleEditProject}>Editar Projeto</button>
+                  <button className={styles.excludeButton} onClick={handleDeleteProject}>
+                    Excluir Projeto
+                  </button>
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
           </div>
 
-        </div>
-        <p className={styles.description}>{project.description}</p>
-        <p className={styles.description}>{project.endDate}</p>
+          <p className={styles.description}>{project.description}</p>
+          <p className={styles.description}>{project.endDate}</p>
 
-        
-        <CollaboratorsPanel collaborators={collaborators} />
+          <CollaboratorsPanel collaborators={collaborators} />
 
-        {tasks.length === 0 ? (
-          <div>
-            <AddCardButton onClick={handleAddTask} text='nova tarefa'/>
-            <p className={styles.empty}>Nenhuma tarefa cadastrada.</p>
+          {/* Filtros */}
+          <div className={styles.filters}>
+            <input
+              type="text"
+              placeholder="Filtrar por nome"
+              value={nameFilter}
+              onChange={(e) => setNameFilter(e.target.value)}
+            />
+            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+              <option value="">Todos os status</option>
+              <option value="todo">Pendente</option>
+              <option value="in_progress">Em andamento</option>
+              <option value="done">Concluída</option>
+            </select>
+            <input
+              type="date"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            />
           </div>
-        ) : (
-          <div className={styles.cardGrid}>
-            <AddCardButton onClick={handleAddTask} text='nova tarefa'/>
-            {tasks.map((task) => (
-              <TaskCard task={task} onClick={() => navigate(`/tasks/${task.id}`)} />
-            ))}
-          </div>
-        )}
-      </>
-    ) : (
-      <p className={styles.error}>Projeto não encontrado.</p>
-    )}
-  </div>
-);
 
-
-
+          {filteredTasks.length === 0 ? (
+            <div>
+              <AddCardButton onClick={handleAddTask} text="nova tarefa" />
+              <p className={styles.empty}>Nenhuma tarefa encontrada com os filtros aplicados.</p>
+            </div>
+          ) : (
+            <div className={styles.cardGrid}>
+              <AddCardButton onClick={handleAddTask} text="nova tarefa" />
+              {filteredTasks.map((task) => (
+                <TaskCard key={task.id} task={task} onClick={() => navigate(`/tasks/${task.id}`)} />
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <p className={styles.error}>Projeto não encontrado.</p>
+      )}
+    </div>
+  );
 }
