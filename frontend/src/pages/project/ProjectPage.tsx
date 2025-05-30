@@ -60,6 +60,23 @@ export default function ProjectPage() {
     navigate(`/project/${projectId}/tasks/create`);
   };
 
+
+  const handleRemoveCollaborator = async (userId: string) => {
+    if (!projectId) return;
+
+    const confirm = window.confirm("Tem certeza que deseja remover este colaborador?");
+    if (!confirm) return;
+
+    try {
+      await projectService.removeCollaborator(projectId, {userId: userId});
+      setCollaborators((prev) => prev.filter((collab) => collab.id !== userId));
+    } catch (err) {
+      alert('Erro ao remover colaborador.');
+      console.error(err);
+    }
+  };
+
+
   const handleEditProject = () => {
     if (projectId) {
       navigate(`/dashboard/edit/${projectId}`);
@@ -161,7 +178,7 @@ export default function ProjectPage() {
 
             <div className={styles.collaboratorsPanel}>
               <h1 className={styles.title2}>Colaboradores</h1>
-              <CollaboratorsPanel collaborators={collaborators} />
+              <CollaboratorsPanel collaborators={collaborators} onRemove={handleRemoveCollaborator} />
             </div>
 
           </div>

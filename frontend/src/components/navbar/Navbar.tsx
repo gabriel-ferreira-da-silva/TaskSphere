@@ -20,7 +20,7 @@ export function Navbar() {
 
   const navItems = [
     { path: '/dashboard', label: 'Dashboard' },
-    { path: '/tasklist', label: 'listar Tarefas' },
+    { path: '/tasks/list', label: 'listar Tarefas' },
   ];
 
   return (

@@ -21,7 +21,6 @@ export default function EditTaskPage() {
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [projectId, setProjectId] = useState('');
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -31,10 +30,9 @@ export default function EditTaskPage() {
         const task = await taskService.getOne(taskId);
         setTitle(task.title);
         setStatus(task.status);
-        setDueDate(task.dueDate.slice(0, 10)); // formato YYYY-MM-DD
+        setDueDate(task.dueDate.slice(0, 10));
         setImageUrl(task.imageUrl);
-        setProjectId(task.projectId);
-      } catch (err) {
+      } catch {
         setError('Erro ao carregar tarefa.');
       } finally {
         setLoading(false);
@@ -56,12 +54,12 @@ export default function EditTaskPage() {
         imageUrl,
       });
       navigate(`/tasks/${taskId}`);
-    } catch (err) {
+    } catch {
       setError('Erro ao atualizar tarefa.');
     }
   };
 
-  if (loading) return <p>Carregando tarefa...</p>;
+  if (loading) return <p className={styles.loading}>Carregando tarefa...</p>;
   if (error) return <p className={styles.error}>{error}</p>;
 
   return (
@@ -71,9 +69,11 @@ export default function EditTaskPage() {
         <label htmlFor="title">Título:</label>
         <input
           id="title"
+          type="text"
           value={title}
           onChange={e => setTitle(e.target.value)}
           required
+          placeholder="Digite o título da tarefa"
         />
 
         <label htmlFor="status">Status:</label>
@@ -99,13 +99,19 @@ export default function EditTaskPage() {
         <label htmlFor="imageUrl">URL da imagem (opcional):</label>
         <input
           id="imageUrl"
+          type="url"
           value={imageUrl}
           onChange={e => setImageUrl(e.target.value)}
+          placeholder="https://exemplo.com/imagem.jpg"
         />
 
         <div className={styles.buttonGroup}>
           <button type="submit" className={styles.saveButton}>Salvar</button>
-          <button type="button" className={styles.cancelButton} onClick={() => navigate(`/tasks/${taskId}`)}>
+          <button
+            type="button"
+            className={styles.cancelButton}
+            onClick={() => navigate(`/tasks/${taskId}`)}
+          >
             Cancelar
           </button>
         </div>
