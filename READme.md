@@ -44,12 +44,16 @@ cd tasksphere
 ## 2. Instalar dependências
 
 # Backend
+```
 cd backend
 npm install
+```
 
 # Frontend
-cd ../frontend
+```
+cd frontend
 npm install
+```
 
 ## 3. Configurar variáveis de ambiente
 📦 Backend - .env
@@ -64,11 +68,16 @@ VITE_API_URL=https://tasksphere-deploy.onrender.com
 ## 4. Executar localmente
 
 # Backend
+```
 cd backend
 npx prisma generate
 npx prisma migrate dev
 npm run start:dev
+```
 
 # Frontend
+```
 cd ../frontend
 npm run dev
+```
+
