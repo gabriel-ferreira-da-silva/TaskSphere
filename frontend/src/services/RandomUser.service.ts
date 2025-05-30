@@ -5,7 +5,7 @@ export class RandomUserService {
   private API_URL: string;
 
   constructor() {
-    this.API_URL = 'https://tasksphere-deploy.onrender.com/';
+    this.API_URL = 'https://tasksphere-deploy.onrender.com';
   }
 
   async getUsers(results = 5): Promise<User[]> {

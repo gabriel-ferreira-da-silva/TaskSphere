@@ -26,7 +26,7 @@ export class TaskService {
   private API_URL: string;
 
   constructor() {
-    this.API_URL = 'https://tasksphere-deploy.onrender.com/';
+    this.API_URL = 'https://tasksphere-deploy.onrender.com';
   }
 
   async getAll() {
