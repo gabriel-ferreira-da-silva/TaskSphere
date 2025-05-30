@@ -16,6 +16,7 @@ const projectService = new ProjectService();
 export default function ProjectPage() {
   const { projectId } = useParams();
   const [project, setProject] = useState<Project | null>(null);
+  const [loggedUser, setLoggedUser] = useState<User>();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [collaborators, setCollaborators] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -39,7 +40,7 @@ export default function ProjectPage() {
         setProject(projectData);
         setTasks(taskData);
         setCollaborators(userData);
-
+        setLoggedUser(JSON.parse(localStorage.getItem("user")))
       } catch (err) {
         setError('Erro ao carregar dados do projeto.');
       } finally {
@@ -88,8 +89,14 @@ export default function ProjectPage() {
         <div className={styles.titleHolder}>
           <h1 className={styles.title}>{project.name}</h1>
           <div className={styles.buttonsHolder}>
-            <button onClick={handleEditProject}>Editar Projeto</button>
-            <button className={styles.excludeButton} onClick={handleDeleteProject}>Excluir Projeto</button>
+            {
+              project.creatorId == loggedUser?.id ?
+              <div>
+                <button onClick={handleEditProject}>Editar Projeto</button>
+                <button className={styles.excludeButton} onClick={handleDeleteProject}>Excluir Projeto</button>
+              </div> :
+              <div></div>
+            }
           </div>
 
         </div>

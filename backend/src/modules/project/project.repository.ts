@@ -47,9 +47,26 @@ export class ProjectRepository {
   }
 
 
-  findByUserId(id: string): Promise<Project[] | null> {
-    return this.prisma.project.findMany({ where: { creatorId: id } })
+  findByUserId(userId: string): Promise<Project[]> {
+    return this.prisma.project.findMany({
+      where: {
+        OR: [
+          { creatorId: userId },
+          {
+            collaborators: {
+              some: {
+                id: userId,
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        collaborators: true,
+      },
+    });
   }
+
 
   async getCollaborators(projectId: string) {
     const project = await this.prisma.project.findUnique({
