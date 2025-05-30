@@ -82,14 +82,34 @@ export class ProjectRepository {
     });
   }
 
-  update(
-    id: string,
-    data: Partial<CreateProjectDto>,
-  ): Promise<Project> {
-    return this.prisma.project.update({ where: { id }, data })
+  async update(id: string, data: Partial<CreateProjectDto>): Promise<Project> {
+    return this.prisma.project.update({
+      where: { id },
+      data: {
+        name: data.name,
+        description: data.description,
+        startDate: data.startDate ? new Date(data.startDate) : undefined,
+        endDate: data.endDate ? new Date(data.endDate) : undefined,
+        updatedAt: new Date(),
+        ...(data.collaborators ? {
+          collaborators: {
+            set: data.collaborators, 
+          }
+        } : {})
+      }
+    });
   }
 
-  remove(id: string): Promise<Project> {
-    return this.prisma.project.delete({ where: { id } })
+  async remove(id: string): Promise<Project> {
+    await this.prisma.task.deleteMany({
+      where: {
+        projectId: id,
+      },
+    });
+
+    return this.prisma.project.delete({
+      where: { id },
+    });
+
   }
 }

@@ -6,7 +6,11 @@
   font-size: 2rem;
   margin-bottom: 1rem;
 }
-
+.cardHolder{
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
 .createButton {
   background-color: #007bff;
   color: white;
@@ -31,9 +35,10 @@
 }
 
 .cardGrid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
 }
 
 .card {

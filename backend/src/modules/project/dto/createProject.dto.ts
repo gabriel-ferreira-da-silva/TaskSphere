@@ -20,4 +20,6 @@ export class CreateProjectDto {
   @IsString()
   @IsNotEmpty()
   creatorId: string
+
+  collaborators: any;
 }

@@ -10,6 +10,20 @@
   color: #333;
 }
 
+.titleHolder{
+  display: flex;
+  flex: row;
+  justify-content: space-between;
+}
+.buttonsHolder{
+  padding: 10px;
+}
+
+.excludeButton{
+  background-color: red;
+  margin:10px
+}
+
 .description {
   font-size: 1.1rem;
   color: #666;
@@ -33,7 +47,8 @@
 }
 
 .cardGrid {
-  display: grid;
+  display: flex;
+  flex-direction: row;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
 }
