@@ -100,7 +100,16 @@ export class ProjectRepository {
     });
   }
 
-  remove(id: string): Promise<Project> {
-    return this.prisma.project.delete({ where: { id } })
+  async remove(id: string): Promise<Project> {
+    await this.prisma.task.deleteMany({
+      where: {
+        projectId: id,
+      },
+    });
+
+    return this.prisma.project.delete({
+      where: { id },
+    });
+
   }
 }
