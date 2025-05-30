@@ -30,6 +30,7 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
   overflow-wrap: break-word; 
+  color: #f0f0f0;
 }
 
 .cardDescription {
@@ -41,6 +42,7 @@
 }
 
 .cardDate{
+  color: white;
   font-size: 1.5rem;
     font-weight: 600;
 }

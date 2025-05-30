@@ -5,7 +5,7 @@ import styles from './CollaboratorsPanel.module.css';
 
 interface CollaboratorsPanelProps {
   collaborators: User[];
-  onRemove: (userId: string) => void;  // função recebida via props
+  onRemove: (userId: string) => void;
 }
 
 export function CollaboratorsPanel({ collaborators, onRemove }: CollaboratorsPanelProps) {

@@ -36,7 +36,7 @@ export default function ViewTaskPage() {
       try {
         const data = await taskService.getOne(taskId);
         setTask(data);
-      } catch (err) {
+      } catch {
         setError('Erro ao carregar tarefa.');
       } finally {
         setLoading(false);
@@ -55,7 +55,7 @@ export default function ViewTaskPage() {
     try {
       await taskService.remove(taskId);
       navigate(`/projects/${task.projectId}`);
-    } catch (err) {
+    } catch {
       setError('Erro ao excluir tarefa.');
     }
   };
@@ -87,7 +87,7 @@ export default function ViewTaskPage() {
       <p><strong>Criador:</strong> {task.creatorId}</p>
 
       <div className={styles.buttonGroup}>
-        <button className={styles.button} onClick={() => navigate(`/projects/${task.projectId}`)}>
+        <button className={styles.backButton} onClick={() => navigate(`/projects/${task.projectId}`)}>
           Voltar para Projeto
         </button>
         <button className={styles.editButton} onClick={handleEdit}>

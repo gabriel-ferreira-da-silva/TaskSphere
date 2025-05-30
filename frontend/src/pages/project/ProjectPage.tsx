@@ -60,6 +60,23 @@ export default function ProjectPage() {
     navigate(`/project/${projectId}/tasks/create`);
   };
 
+
+  const handleRemoveCollaborator = async (userId: string) => {
+    if (!projectId) return;
+
+    const confirm = window.confirm("Tem certeza que deseja remover este colaborador?");
+    if (!confirm) return;
+
+    try {
+      await projectService.removeCollaborator(projectId, {userId: userId});
+      setCollaborators((prev) => prev.filter((collab) => collab.id !== userId));
+    } catch (err) {
+      alert('Erro ao remover colaborador.');
+      console.error(err);
+    }
+  };
+
+
   const handleEditProject = () => {
     if (projectId) {
       navigate(`/dashboard/edit/${projectId}`);
@@ -116,42 +133,57 @@ export default function ProjectPage() {
           <p className={styles.description}>{project.description}</p>
           <p className={styles.description}>{project.endDate}</p>
 
-          <CollaboratorsPanel collaborators={collaborators} />
+          <div className={styles.mainPanel}>
+          
+            <div className={styles.taskMainPanel}>
 
-          {/* Filtros */}
-          <div className={styles.filters}>
-            <input
-              type="text"
-              placeholder="Filtrar por nome"
-              value={nameFilter}
-              onChange={(e) => setNameFilter(e.target.value)}
-            />
-            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="">Todos os status</option>
-              <option value="todo">Pendente</option>
-              <option value="in_progress">Em andamento</option>
-              <option value="done">Concluída</option>
-            </select>
-            <input
-              type="date"
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-            />
+              <div className={styles.filters}>
+                <input
+                  type="text"
+                  placeholder="Filtrar por nome"
+                  value={nameFilter}
+                  onChange={(e) => setNameFilter(e.target.value)}
+                />
+                <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+                  <option value="">Todos os status</option>
+                  <option value="todo">Pendente</option>
+                  <option value="in_progress">Em andamento</option>
+                  <option value="done">Concluída</option>
+                </select>
+                <input
+                  type="date"
+                  value={dateFilter}
+                  onChange={(e) => setDateFilter(e.target.value)}
+                />
+              </div>
+
+              <h1 className={styles.title2}>Tarefas</h1>
+
+
+              {filteredTasks.length === 0 ? (
+                <div>
+                  <AddCardButton onClick={handleAddTask} text="nova tarefa" />
+                  <p className={styles.empty}>Nenhuma tarefa encontrada com os filtros aplicados.</p>
+                </div>
+              ) : (
+                <div className={styles.cardGrid}>
+                  <AddCardButton onClick={handleAddTask} text="nova tarefa" />
+                  {filteredTasks.map((task) => (
+                    <TaskCard key={task.id} task={task} onClick={() => navigate(`/tasks/${task.id}`)} />
+                  ))}
+                </div>
+              )}
+
+            </div>
+
+            <div className={styles.collaboratorsPanel}>
+              <h1 className={styles.title2}>Colaboradores</h1>
+              <CollaboratorsPanel collaborators={collaborators} onRemove={handleRemoveCollaborator} />
+            </div>
+
           </div>
+            
 
-          {filteredTasks.length === 0 ? (
-            <div>
-              <AddCardButton onClick={handleAddTask} text="nova tarefa" />
-              <p className={styles.empty}>Nenhuma tarefa encontrada com os filtros aplicados.</p>
-            </div>
-          ) : (
-            <div className={styles.cardGrid}>
-              <AddCardButton onClick={handleAddTask} text="nova tarefa" />
-              {filteredTasks.map((task) => (
-                <TaskCard key={task.id} task={task} onClick={() => navigate(`/tasks/${task.id}`)} />
-              ))}
-            </div>
-          )}
         </>
       ) : (
         <p className={styles.error}>Projeto não encontrado.</p>

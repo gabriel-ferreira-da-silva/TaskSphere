@@ -1,45 +1,106 @@
 .container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 24px;
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 24px 32px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+}
+
+h1 {
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #34495e;
+  text-align: center;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #34495e;
+  margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="url"],
+select {
+  padding: 12px 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1.8px solid #dcdcdc;
+  transition: border-color 0.2s ease;
+  outline-offset: 2px;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="url"]:focus,
+select:focus {
+  border-color: #2980b9;
+  box-shadow: 0 0 6px #2980b9aa;
 }
 
 .buttonGroup {
   display: flex;
-  gap: 12px;
-  margin-top: 20px;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+.saveButton,
+.cancelButton {
+  flex: 1;
+  padding: 14px 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .saveButton {
-  background-color: #28a745;
+  background-color: #27ae60;
   color: white;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+}
+
+.saveButton:hover {
+  background-color: #219150;
 }
 
 .cancelButton {
-  background-color: #6c757d;
-  color: white;
-  padding: 10px 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background-color: #bdc3c7;
+  color: #2c3e50;
 }
 
-.saveButton:hover,
 .cancelButton:hover {
-  opacity: 0.85;
+  background-color: #95a5a6;
 }
 
 .error {
-  color: red;
-  margin-bottom: 12px;
+  margin: 12px 0;
+  padding: 12px;
+  background-color: #e74c3c33;
+  border: 1.5px solid #e74c3c;
+  border-radius: 8px;
+  color: #e74c3c;
+  font-weight: 600;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #7f8c8d;
 }

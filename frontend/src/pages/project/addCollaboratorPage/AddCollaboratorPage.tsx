@@ -85,7 +85,7 @@ export default function AddCollaboratorPage() {
 
   return (
     <div className={styles.container}>
-      <h1>Adicionar Colaborador</h1>
+      <h1>Adicionar Colaborador Interno</h1>
 
       <form onSubmit={handleSubmit} className={styles.form}>
         <label htmlFor="user">Selecione um usuário:</label>
@@ -109,7 +109,7 @@ export default function AddCollaboratorPage() {
       {success && <p className={styles.success}>{success}</p>}
       {error && <p className={styles.error}>{error}</p>}
 
-      <h2>Sugestões de Colaboradores</h2>
+      <h2>Sugestões de Colaboradores externos (RandomUser)</h2>
       <div className={styles.suggestions}>
         {suggestedUsers.map((user, index) => (
           <div key={index} className={styles.card}>
