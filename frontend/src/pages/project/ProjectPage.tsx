@@ -8,7 +8,7 @@ import { User } from '../../interfaces/user.interface';
 import { CollaboratorsPanel } from './collaboratorsPanel.tsx/CollaboratorsPanel';
 import styles from './ProjectPage.module.css';
 import { AddCardButton } from '../../components/AddCardButton/AddCardButton';
-
+import { TaskCard } from '../../components/TaskCard/TaskCard';
 
 const taskService = new TaskService();
 const projectService = new ProjectService();
@@ -99,22 +99,13 @@ export default function ProjectPage() {
         
         <CollaboratorsPanel collaborators={collaborators} />
 
-        <AddCardButton onClick={handleAddTask} text='nova tarefa'/>
-
         {tasks.length === 0 ? (
           <p className={styles.empty}>Nenhuma tarefa cadastrada.</p>
         ) : (
           <div className={styles.cardGrid}>
+            <AddCardButton onClick={handleAddTask} text='nova tarefa'/>
             {tasks.map((task) => (
-              <div
-                key={task.id}
-                className={styles.card}
-                onClick={() => navigate(`/tasks/${task.id}`)}
-                style={{ cursor: 'pointer' }}
-              >
-                <h2>{task.title}</h2>
-                <p>Status: <strong>{task.status}</strong></p>
-              </div>
+              <TaskCard task={task} onClick={() => navigate(`/tasks/${task.id}`)} />
             ))}
           </div>
         )}
