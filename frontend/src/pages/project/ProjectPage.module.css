@@ -10,6 +10,48 @@
   color: #333;
 }
 
+
+.title2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  margin-top: 100px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f5f7fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.filters input[type="text"],
+.filters select,
+.filters input[type="date"] {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  min-width: 180px;
+  flex: 1;
+}
+
+.filters input[type="text"]:focus,
+.filters select:focus,
+.filters input[type="date"]:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+
 .titleHolder{
   display: flex;
   flex: row;
@@ -47,11 +89,14 @@
 }
 
 .cardGrid {
-  display: flex;
-  flex-direction: row;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  width: 100%;
+  padding: 1rem 0;
+  box-sizing: border-box;
 }
+
 
 .card {
   border: 1px solid #ddd;
@@ -85,5 +130,10 @@
 
 .collaboratorsList li {
   margin-bottom: 4px;
+}
+
+.mainPanel{
+  display: flex;
+  flex-direction: column;
 }
 
