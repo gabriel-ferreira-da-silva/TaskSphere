@@ -24,3 +24,54 @@
 .addButton:hover {
   background-color: #0056b3;
 }
+
+
+.panel {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.removeButton {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: #d9363e;
+}
+
+.addButton {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #45a049;
+}

@@ -24,17 +24,31 @@ export class ProjectRepository {
   }
 
   async addCollaborator(projectId: string, userId: string) {
-  return this.prisma.project.update({
-    where: { id: projectId },
-    data: {
-      collaborators: {
-        connect: {
-          id: userId,
+    return this.prisma.project.update({
+      where: { id: projectId },
+      data: {
+        collaborators: {
+          connect: {
+            id: userId,
+          },
         },
       },
-    },
-  });
-}
+    });
+  }
+
+  async removeCollaborator(projectId: string, userId: string) {
+    return this.prisma.project.update({
+      where: { id: projectId },
+      data: {
+        collaborators: {
+          disconnect: {
+            id: userId,
+          },
+        },
+      },
+    });
+  }
+
 
 
   findOne(id: string): Promise<Project | null> {

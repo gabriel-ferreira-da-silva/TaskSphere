@@ -17,12 +17,17 @@ export class UserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
+    const { name, email } = createUserDto;
+
     return this.userRepository.create({
-      ...createUserDto,
+      name,
+      email,
       password: hashedPassword,
-    })
+    });
   }
+
 
   async update(id: string, data: Partial<CreateUserDto>): Promise<User> {
     return this.userRepository.update(id, data)

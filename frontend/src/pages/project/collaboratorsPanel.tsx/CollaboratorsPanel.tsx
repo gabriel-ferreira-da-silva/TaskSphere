@@ -5,9 +5,10 @@ import styles from './CollaboratorsPanel.module.css';
 
 interface CollaboratorsPanelProps {
   collaborators: User[];
+  onRemove: (userId: string) => void;  // função recebida via props
 }
 
-export function CollaboratorsPanel({ collaborators }: CollaboratorsPanelProps) {
+export function CollaboratorsPanel({ collaborators, onRemove }: CollaboratorsPanelProps) {
   const navigate = useNavigate();
   const { projectId } = useParams<{ projectId: string }>();
 
@@ -20,14 +21,26 @@ export function CollaboratorsPanel({ collaborators }: CollaboratorsPanelProps) {
   return (
     <div className={styles.panel}>
       <h3>Colaboradores</h3>
+
       {collaborators.length === 0 ? (
         <p>Nenhum colaborador encontrado.</p>
       ) : (
-        <ul className={styles.list}>
+        <div className={styles.cardContainer}>
           {collaborators.map(user => (
-            <li key={user.id}>{user.name}</li>
+            <div key={user.id} className={styles.card}>
+              <div>
+                <strong>{user.name}</strong>
+                <p>{user.email}</p>
+              </div>
+              <button
+                className={styles.removeButton}
+                onClick={() => onRemove(user.id)}
+              >
+                Remover
+              </button>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
       <button className={styles.addButton} onClick={handleAddCollaborator}>
