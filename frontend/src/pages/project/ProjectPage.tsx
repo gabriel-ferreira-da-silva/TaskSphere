@@ -100,7 +100,10 @@ export default function ProjectPage() {
         <CollaboratorsPanel collaborators={collaborators} />
 
         {tasks.length === 0 ? (
-          <p className={styles.empty}>Nenhuma tarefa cadastrada.</p>
+          <div>
+            <AddCardButton onClick={handleAddTask} text='nova tarefa'/>
+            <p className={styles.empty}>Nenhuma tarefa cadastrada.</p>
+          </div>
         ) : (
           <div className={styles.cardGrid}>
             <AddCardButton onClick={handleAddTask} text='nova tarefa'/>

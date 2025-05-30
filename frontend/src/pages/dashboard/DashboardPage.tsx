@@ -59,7 +59,10 @@ export default function DashboardPage() {
         ) : error ? (
           <p className={styles.error}>{error}</p>
         ) : projects.length === 0 ? (
-          <p className={styles.empty}>Nenhum projeto encontrado.</p>
+          <div>
+            <AddCardButton onClick={handleCreateProject} text={"novo projeto"}/>
+            <p className={styles.empty}>Nenhum projeto encontrado.</p>
+          </div>
         ) : (
           <div className={styles.cardGrid}>
               <AddCardButton onClick={handleCreateProject} text={"novo projeto"}/>
