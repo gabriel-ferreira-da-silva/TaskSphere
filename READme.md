@@ -2,6 +2,8 @@
 
 **TaskSphere** é uma aplicação web moderna de gerenciamento de tarefas com autenticação de usuários, criação de projetos colaborativos e controle de acesso por permissões. O sistema é composto por:
 
+![](https://raw.githubusercontent.com/gabriel-ferreira-da-silva/TaskSphere/d7e523bf837067d04be58fb68cbe2bd13344155b/frontend/public/gif.gif)
+
 - **Frontend**: React + Vite (hospedado no Vercel)
 - **Backend**: NestJS + Prisma ORM (hospedado no Render)
 - **Banco de Dados**: MySQL (Railway)
